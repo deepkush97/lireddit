@@ -2,6 +2,7 @@ import { __dbUsername__, __dbPassword__, __prod__ } from "./constant";
 import { Post } from "./entities/Post";
 import { MikroORM } from "@mikro-orm/core";
 import path from "path";
+import { User } from "./entities/User";
 
 export default {
   migrations: {
@@ -13,5 +14,5 @@ export default {
   password: __dbPassword__,
   type: "postgresql",
   debug: !__prod__,
-  entities: [Post],
+  entities: [Post, User],
 } as Parameters<typeof MikroORM.init>[0];
