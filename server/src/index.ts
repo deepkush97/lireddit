@@ -1,23 +1,24 @@
+import { ApolloServer } from "apollo-server-express";
+import connectRedis from "connect-redis";
+import cors from "cors";
+import express from "express";
+import session from "express-session";
+import Redis from "ioredis";
+import path from "path";
 import "reflect-metadata";
+import { buildSchema } from "type-graphql";
+import { createConnection } from "typeorm";
 import {
-  __prod__,
+  COOKiE_NAME,
   __dbPassword__,
   __dbUsername__,
-  COOKiE_NAME,
+  __prod__,
 } from "./constant";
-import express from "express";
-import { ApolloServer } from "apollo-server-express";
-import { buildSchema } from "type-graphql";
+import { Post } from "./entities/Post";
+import { User } from "./entities/User";
 import { HelloResolver } from "./resolvers/hello";
 import { PostResolver } from "./resolvers/post";
 import { UserResolver } from "./resolvers/user";
-import Redis from "ioredis";
-import session from "express-session";
-import connectRedis from "connect-redis";
-import cors from "cors";
-import { createConnection } from "typeorm";
-import { Post } from "./entities/Post";
-import { User } from "./entities/User";
 
 const main = async () => {
   const connection = await createConnection({
@@ -26,10 +27,13 @@ const main = async () => {
     username: __dbUsername__,
     password: __dbPassword__,
     logging: true,
+    migrations: [path.join(__dirname, "./migrations/*")],
     synchronize: true,
     entities: [Post, User],
   });
 
+  await connection.runMigrations();
+  // await Post.delete({});
   const app = express();
 
   const RedisStore = connectRedis(session);
