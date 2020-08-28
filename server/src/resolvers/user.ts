@@ -1,24 +1,24 @@
+import argon2 from "argon2";
 import {
-  Resolver,
-  Mutation,
-  Field,
   Arg,
   Ctx,
+  Field,
+  FieldResolver,
+  Mutation,
   ObjectType,
   Query,
-  FieldResolver,
+  Resolver,
   Root,
 } from "type-graphql";
-import argon2 from "argon2";
-import { MyContext } from "../types";
-import { User } from "../entities/User";
-import { COOKiE_NAME, FORGET_PASSWORD_PREFIX } from "../constant";
-import { UsernamePasswordInput } from "./UsernamePasswordInput";
-import { FieldError } from "./FieldError";
-import { validateRegister } from "../utils/validateRegister";
-import { v4 } from "uuid";
-import { sendEmail } from "../utils/sendEmail";
 import { getConnection } from "typeorm";
+import { v4 } from "uuid";
+import { COOKiE_NAME, FORGET_PASSWORD_PREFIX } from "../constant";
+import { User } from "../entities/User";
+import { MyContext } from "../types";
+import { sendEmail } from "../utils/sendEmail";
+import { validateRegister } from "../utils/validateRegister";
+import { FieldError } from "./FieldError";
+import { UsernamePasswordInput } from "./UsernamePasswordInput";
 
 @ObjectType()
 class UserResponse {
