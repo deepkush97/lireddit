@@ -1,11 +1,10 @@
-import { NavBar } from "../components/NavBar";
+import { Box, Button, Flex, Heading, Link, Stack, Text } from "@chakra-ui/core";
 import { withUrqlClient } from "next-urql";
-import { createUrqlClient } from "../utils/createUrqlClient";
-import { usePostsQuery } from "../generated/graphql";
-import { Layout } from "../components/Layout";
 import NextLink from "next/link";
-import { Link, Stack, Box, Heading, Text, Flex, Button } from "@chakra-ui/core";
 import { useState } from "react";
+import { Layout } from "../components/Layout";
+import { usePostsQuery } from "../generated/graphql";
+import { createUrqlClient } from "../utils/createUrqlClient";
 const Index = () => {
   const [variables, setVariables] = useState({
     limit: 10,
